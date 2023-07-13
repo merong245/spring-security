@@ -16,7 +16,8 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Account {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Integer id;
 
     @Column(unique = true)
@@ -25,4 +26,8 @@ public class Account {
     private String password;
 
     private String role;
+
+    public void encodePassword() {
+        this.password = "{noop}" + this.password;
+    }
 }
