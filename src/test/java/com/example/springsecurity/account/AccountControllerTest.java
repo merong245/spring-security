@@ -26,17 +26,19 @@ class AccountControllerTest {
     MockMvc mockMvc;
 
     @Test
+    @WithAnonymousUser
     @DisplayName("익명 유저의 인덱스 페이지 정상 방문")
     public void index_anonymous() throws Exception {
-        mockMvc.perform(get("/").with(anonymous()))
+        mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
+    @WithUser
     @DisplayName("로그인된 상태의 유저의 인덱스 페이지 정상 방문")
     public void index_user() throws Exception{
-        mockMvc.perform(get("/").with(user("junhyeok").password("pwd").roles("USER")))
+        mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(status().isOk());
 
@@ -44,8 +46,8 @@ class AccountControllerTest {
 
 
     @Test
-    @DisplayName("익명 유저의 관리자 페이지 방문 실패 - 미인증")
     @WithAnonymousUser
+    @DisplayName("익명 유저의 관리자 페이지 방문 실패 - 미인증")
     public void admin_page_with_anonymous() throws Exception {
         mockMvc.perform(get("/admin"))
                 .andDo(print())
@@ -53,8 +55,8 @@ class AccountControllerTest {
     }
 
     @Test
+    @WithUser
     @DisplayName("로그인된 상태의 유저의 관리자 페이지 방문 실패 - 권한 거부 ")
-    @WithMockUser(username = "junhyeok", roles = "USER")
     public void admin_page_with_user() throws Exception{
         mockMvc.perform(get("/admin"))
                 .andDo(print())
@@ -64,8 +66,8 @@ class AccountControllerTest {
 
 
     @Test
+    @WithAdmin
     @DisplayName("로그인된 상태의 관리자의 관리자 페이지 방문 성공")
-    @WithMockUser(username = "admin", roles = "ADMIN")
     public void admin_page_with_admin() throws Exception{
         mockMvc.perform(get("/admin"))
                 .andDo(print())
