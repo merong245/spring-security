@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -23,8 +24,9 @@ class AccountControllerTest {
     MockMvc mockMvc;
 
     @Test
+    @DisplayName("익명 유저의 인덱스 페이지 정상 방문")
     public void index_anonymous() throws Exception {
-        mockMvc.perform(get("/"))
+        mockMvc.perform(get("/").with(anonymous()))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
