@@ -6,6 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -39,4 +41,36 @@ class AccountControllerTest {
                 .andExpect(status().isOk());
 
     }
+
+
+    @Test
+    @DisplayName("익명 유저의 관리자 페이지 방문 실패 - 미인증")
+    @WithAnonymousUser
+    public void admin_page_with_anonymous() throws Exception {
+        mockMvc.perform(get("/admin"))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("로그인된 상태의 유저의 관리자 페이지 방문 실패 - 권한 거부 ")
+    @WithMockUser(username = "junhyeok", roles = "USER")
+    public void admin_page_with_user() throws Exception{
+        mockMvc.perform(get("/admin"))
+                .andDo(print())
+                .andExpect(status().isForbidden());
+
+    }
+
+
+    @Test
+    @DisplayName("로그인된 상태의 관리자의 관리자 페이지 방문 성공")
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void admin_page_with_admin() throws Exception{
+        mockMvc.perform(get("/admin"))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
+
 }
