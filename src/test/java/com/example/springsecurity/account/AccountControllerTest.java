@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
@@ -32,6 +33,7 @@ class AccountControllerTest {
     private AccountRepository accountRepository;
 
     @Test
+    @Transactional
     @WithAnonymousUser
     @DisplayName("익명 유저의 인덱스 페이지 정상 방문")
     public void index_anonymous() throws Exception {
@@ -42,6 +44,7 @@ class AccountControllerTest {
 
     @Test
     @WithUser
+    @Transactional
     @DisplayName("로그인된 상태의 유저의 인덱스 페이지 정상 방문")
     public void index_user() throws Exception {
         mockMvc.perform(get("/"))
@@ -52,6 +55,7 @@ class AccountControllerTest {
 
 
     @Test
+    @Transactional
     @WithAnonymousUser
     @DisplayName("익명 유저의 관리자 페이지 방문 실패 - 미인증")
     public void admin_page_with_anonymous() throws Exception {
@@ -62,6 +66,7 @@ class AccountControllerTest {
 
     @Test
     @WithUser
+    @Transactional
     @DisplayName("로그인된 상태의 유저의 관리자 페이지 방문 실패 - 권한 거부 ")
     public void admin_page_with_user() throws Exception {
         mockMvc.perform(get("/admin"))
@@ -73,6 +78,7 @@ class AccountControllerTest {
 
     @Test
     @WithAdmin
+    @Transactional
     @DisplayName("로그인된 상태의 관리자의 관리자 페이지 방문 성공")
     public void admin_page_with_admin() throws Exception {
         mockMvc.perform(get("/admin"))
@@ -82,6 +88,7 @@ class AccountControllerTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("올바른 계정으로 로그인")
     public void login_success() throws Exception {
         String username = "junhyeok";
@@ -95,6 +102,7 @@ class AccountControllerTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("다른 계정으로 로그인")
     public void login_fail() throws Exception {
         String username = "junhyeok";
