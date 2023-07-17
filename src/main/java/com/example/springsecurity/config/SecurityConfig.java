@@ -31,19 +31,19 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsManager() {
-        UserDetails user = User.withUsername("user")
-                .password("{noop}pass123")
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.withUsername("admin")
-                .password("{noop}pass123")
-                .roles("ADMIN")
-                .build();
-
-        List<UserDetails> userDetails = List.of(user, admin);
-        return new InMemoryUserDetailsManager(userDetails);
-    }
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsManager() {
+//        UserDetails user = User.withUsername("user")
+//                .password("{noop}pass123")
+//                .roles("USER")
+//                .build();
+//
+//        UserDetails admin = User.withUsername("admin")
+//                .password("{noop}pass123")
+//                .roles("ADMIN")
+//                .build();
+//
+//        List<UserDetails> userDetails = List.of(user, admin);
+//        return new InMemoryUserDetailsManager(userDetails);
+//    }
 }
