@@ -1,5 +1,8 @@
 package com.example.springsecurity.controller;
 
+import com.example.springsecurity.service.SampleService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.security.Principal;
 
 @Controller
+@RequiredArgsConstructor
 public class SampleController {
+
+    private final SampleService sampleService;
 
     // handlerMapper가 적절한 컨트롤러를 찾아줌
     // handlerAdaptor가 해당 컨트롤러에 동작을 위임함
@@ -32,6 +38,7 @@ public class SampleController {
     @GetMapping("/dashboard")
     public String info(Model model, Principal principal){
         model.addAttribute("message","Hello " + principal.getName());
+        sampleService.dashboard();
         return "dashboard";
     }
 
