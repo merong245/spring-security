@@ -1,5 +1,7 @@
 package com.example.springsecurity.controller;
 
+import com.example.springsecurity.account.AccountContext;
+import com.example.springsecurity.account.AccountRepository;
 import com.example.springsecurity.service.SampleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import java.security.Principal;
 public class SampleController {
 
     private final SampleService sampleService;
+    private final AccountRepository accountRepository;
 
     // handlerMapper가 적절한 컨트롤러를 찾아줌
     // handlerAdaptor가 해당 컨트롤러에 동작을 위임함
@@ -38,6 +41,7 @@ public class SampleController {
     @GetMapping("/dashboard")
     public String info(Model model, Principal principal){
         model.addAttribute("message","Hello " + principal.getName());
+        AccountContext.setAccount(accountRepository.findByUsername(principal.getName()));
         sampleService.dashboard();
         return "dashboard";
     }
