@@ -18,5 +18,24 @@ Java.lang 패키지에서 제공하는 쓰레드 범위 변수로 쓰레드 수�
 - 데이터 공유는 같은 쓰레드 내에서만 공유
 - 같은 쓰레드인 경우 데이터를 메소드 파라미터로 전송할 필요가 없다.
 
-직접적으로 사용하지는 않으나 알게 모르게 사용 중 
+직접적으로 사용하지는 않으나 알게 모르게 사용 중   
 ex) @Transactional, SecurityContextHolder의 기본전략
+
+# Authentication과 SecurityContextHolder
+AuthenticationManager에게 인증을 받은뒤 Authentication은 어디서 무얼할까?
+
+### UsernamePasswordAuthenticationFilter
+- 폼 인증 처리를 해줌
+- 인증된 Authentication객체를 SecurityContextHolder에 넣어줌
+- SercurityContextHolder.getContext().setAuthentication(authentication);
+- 즉, AuthenticationManager를 사용해서 인증받는 것이 이 필터이다!
+
+### SecurityContextPersistenceFilter
+- SecurityContext를 HTTP session에 캐싱하여 Authentication을 공유
+- SecurityContextRepository를 교체하여 HTTP 세션이 아닌 다른 곳에 저장도 가능
+- 즉, 이 필터를 통해 이미 인증이 된 사용자라면 추가로 인증할 필요없이 사용가능 -> 다른 요청이라도 동일한 객체를 리턴
+  
+스프링 시큐리티의 기본 전략은 세션을 사용하므로 클라이언트의 상태를 서버에 저장한다.  
+무상태성을 유지하기 위해서는 매번 인증하는 JWT 같은 방식을 사용하여 SecurityContextHolder에 인증 정보를 넣어주는 역할을 하는 필터를 사용하는 방법이 있다. 
+
+
