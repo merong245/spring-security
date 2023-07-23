@@ -41,7 +41,6 @@ public class SampleController {
     @GetMapping("/dashboard")
     public String info(Model model, Principal principal){
         model.addAttribute("message","Hello " + principal.getName());
-        AccountContext.setAccount(accountRepository.findByUsername(principal.getName()));
         sampleService.dashboard();
         return "dashboard";
     }
