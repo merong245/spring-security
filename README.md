@@ -36,6 +36,20 @@ AuthenticationManager에게 인증을 받은뒤 Authentication은 어디서 무�
 - 즉, 이 필터를 통해 이미 인증이 된 사용자라면 추가로 인증할 필요없이 사용가능 -> 다른 요청이라도 동일한 객체를 리턴
   
 스프링 시큐리티의 기본 전략은 세션을 사용하므로 클라이언트의 상태를 서버에 저장한다.  
-무상태성을 유지하기 위해서는 매번 인증하는 JWT 같은 방식을 사용하여 SecurityContextHolder에 인증 정보를 넣어주는 역할을 하는 필터를 사용하는 방법이 있다. 
+무상태성을 유지하기 위해서는 매번 인증하는 JWT 같은 방식을 사용하여 SecurityContextHolder에 인증 정보를 넣어주는 역할을 하는 필터를 사용하는 방법이 있다.  
 
+# Filter와 FilterChainProxy
+- 스프링 시큐리티가 제공하는 모든 필터는 FilterChainProxy가 호출한다.
+- request가 들어오면 SecurityFilterChain목록에서 매치되는 URL을 발견한다면 해당 filter를 동작시킨다. 
+
+### 그럼 Filter목록들은 어디서 올까?  
+과거에는 WebSecurityConfigurerAdapter에서 config을 설정할 때 생성하게 된다.
+현재는 SecurityFilterChain를 설정해서 직접 빈으로 등록하면서 각 configure가 Filter가 된다.
+  
+### 어떤 Filter가 먼저 동작할까?
+우선적으로 동작하고 싶은 필터가 있다면 @Order 어노테이션을 활용한다.  
+모든 요청에 인증을 필요로하는 필터와 모든 요청을 허용하는 필터가 있으면 스프링부트가 에러를 발생시킨다.  
+따라서 모든 요청에 인증을 필요로 하는 config에 @Order를 통해 우선순위를 높게준다면 해당 필터가 먼저 동작하여 모든 요청에 인증을 필요로 하게된다.   
+
+사실 @EnableWebSecurity는 설정을 하지않아도 스프링부트가 자동으로 추가해준다.  
 
