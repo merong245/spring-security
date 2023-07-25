@@ -49,7 +49,26 @@ AuthenticationManager에게 인증을 받은뒤 Authentication은 어디서 무�
 ### 어떤 Filter가 먼저 동작할까?
 우선적으로 동작하고 싶은 필터가 있다면 @Order 어노테이션을 활용한다.  
 모든 요청에 인증을 필요로하는 필터와 모든 요청을 허용하는 필터가 있으면 스프링부트가 에러를 발생시킨다.  
-따라서 모든 요청에 인증을 필요로 하는 config에 @Order를 통해 우선순위를 높게준다면 해당 필터가 먼저 동작하여 모든 요청에 인증을 필요로 하게된다.   
+따라서 모든 요청에 인증을 필요로 하는 config에 @Order를 통해 우선순위를 높게준다면 해당 필터가 먼저 동작하여 모든 요청에 인증을 필요로 하게된다.
+만약 모든 요청을 주고 일부를 권한만 막고 싶다면 Filter의 Order를 조작하는 것보다 antMathcer를 통해 전부 허용한뒤 세부 정보를 수정하는 것이 권장된다.  
+
 
 사실 @EnableWebSecurity는 설정을 하지않아도 스프링부트가 자동으로 추가해준다.  
+
+# DelegatingFilterProxy와 FilterChainProxy
+스프링부트는 서블릿기반 웹 어플리케이션이다. 그리고 내장되어있는 기본 서블릿 컨테이너는 톰캣이다.  
+서블릿 동작 전과 후에 일을 처리하는 필터를 서블릿 필터라고 한다.  
+
+### DelegatingFilterProxy
+- 이름에서부터 알듯이 자신이 직접 처리하지 않고 역할을 위임하는 필터
+- 스프링 IoC 컨테이너에 들어있는 필터에 위임히기 위해서는 타겟 빈 이름을 설정해주어야만 한다.
+- 스프링 부트 사용시 자동 등록된다.
+
+### FilterChainProxy
+- springSecurityFilterChain이라는 이름으로 빈에 등록되어있다.
+
+따라서 스프링 부트를 사용하면 SecurityFilterAutoConfigure설정에 의해 DelegatingFilterProxy에 FilterChainProxy가 등록되어 스프링에 필터 처리를 위임하게 된다.  
+즉, 기존에 설명했던 필터들은 전부 서블릿 필터들이고, DelegatingFilterProxy에 의해 위임받아 동작하는 것이다.  
+
+
 
