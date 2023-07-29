@@ -70,5 +70,17 @@ AuthenticationManager에게 인증을 받은뒤 Authentication은 어디서 무�
 따라서 스프링 부트를 사용하면 SecurityFilterAutoConfigure설정에 의해 DelegatingFilterProxy에 FilterChainProxy가 등록되어 스프링에 필터 처리를 위임하게 된다.  
 즉, 기존에 설명했던 필터들은 전부 서블릿 필터들이고, DelegatingFilterProxy에 의해 위임받아 동작하는 것이다.  
 
+# AccessDecisionManager
+Access Control 결정을 내리는 인터페이스로 인가(Authorization)를 처리
+- AffirmativeBased : 여러 Voter중 한명이라도 허용이라면 허용(Default)
+- ConsensusBased : 다수결
+- UnanimousBased : 만장일지
+
+AccessDecisionVoter
+- Authentication이 특정한 Object에 접근할 때 필요한 ConfigAttributes(permitAll(), hasRole() 등)를 만족하는지 확인
+- WebExpressionVoter : 웹 시큐리티에서 사용하는 기본 구현체, ROLE_XXXX를 확인
+- RoleHierarchyVoter : 계층형 ROLE 지원. ADMIN > MANAGER > USER   
+
+
 
 
