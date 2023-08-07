@@ -81,6 +81,12 @@ AccessDecisionVoter
 - WebExpressionVoter : 웹 시큐리티에서 사용하는 기본 구현체, ROLE_XXXX를 확인
 - RoleHierarchyVoter : 계층형 ROLE 지원. ADMIN > MANAGER > USER   
 
+AccessDecisionManager 또는 Voter를 커스텀하는법
+User 페이지를 만들어서 유저가 접근할 수 있도록 권한을 부여한다. 어드민이 접근할 수 있을까?  
+불가능하다. 어드민은 유저권한을 갖고있지 않기 때문이다.  
+따라서 계층형 Role을 지원하는 RoleHierarchyVoter를 적용시키도록 Voter에 커스텀해야한다.(또는 ADMIN유저 생성시 다른권한을 코드상으로 부여해줄 수 있다.)  
+  
+구조를 보면 사실상 똑같은 AccessDecisionManager를 넣어서 따로 굳이 만들 필요 없이 기존 핸들러에 추가적으로 계충을 추가해주면 된다.(2.7버전에서는 빈으로 주입으로 넣어사용하기 때문에 이 방식 x)
 
 
 
