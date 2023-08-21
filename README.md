@@ -92,5 +92,20 @@ User 페이지를 만들어서 유저가 접근할 수 있도록 권한을 부�
 AccessDecisionManager를 사용해서 Access Control을 하거나 예외처리하는 필터  
 대부분의 경우 FilterChainProxy로 가장 마지막 필터로 들어있다.  
 
+# ExceptionTranslationFilter
+Filter Chain에서 발생하는 AuthenticationException과 AccessDeniedException을 처리하는 필터  
+
+### AuthenticationException이 발생 시 - 인증 확인
+- AuthenticationEntryPoint 실행 -> 사용자가 인증하도록 처이 
+- AbstractSecurityInterceptor 하위클래스(ex. FilterSecurityInterceptor)에서 발생하는 예외만 처리
+- UsernamePasswordAuthenticationFilter에서 발생하는 인증 에러의 경우는??
+  - AbstractAuthenticationProcessingFilter(UsernamePasswordAuthenticationFilter의 상위 클래스)에서 인증 에러를 발생시킨다. 
+   
+### AccessDeniedException 발생 시 - 권한 확인
+- 익명 사용자라면 AuthenticationEntryPoint 실행 -> 사용자가 인증하도록 처리
+- 익명 사용자가 아니라면 AccessDeniedHandler에게 위임 -> 권한없으므로 예외처리
+
+
+
 
 
