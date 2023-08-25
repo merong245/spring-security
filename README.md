@@ -106,6 +106,21 @@ Filter Chain에서 발생하는 AuthenticationException과 AccessDeniedException
 - 익명 사용자가 아니라면 AccessDeniedHandler에게 위임 -> 권한없으므로 예외처리
 
 
+# 스프링 시큐리티 적용 여부 설정
+여태까지는 스프링 시큐리티가 필터를 적용해서 처리  
+우리는 하나의 요청을 보내더라도 실제로 브라우저는 여러 요청을 보내게 된다.(ex. favicon.ico)  
+따라서 favicon요청이 허가되지 않았더라면 인증되지 않은 사용자이므로 login페이지도 요청하게된다.    
+동작을 확인하기 위해서는 FilterChainProxy에 디버거를 잡고 확인해보자.  
+아무튼 favicon 요청에 대해서는 비인가 사용자가 요청할 수 있게 등록한다면 이런 문제는 없어지겠지만 매번 이러한 static자원을 등록해야할까?
+- 스프링 시큐리티 5.7버전 이상부터는 configure를 커스텀하는 것이 아닌 WebSecurity 커스텀을 위해 WebSecurityCustomizer를 통해 등록한다.
+  - 참고 : https://sprin7io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
+- 하지만 webSecurity에 ignore를 적용하고 싶다면 httpSecurity에 permitAll을 사용하는 것을 공식홈페이지에서 권장한다.
+- 이러한 방법을 사용하면 정적자원 요청시 수행되는 필터들이 없어지게 되고 성능상 장점을 가질 수 있다.
+
+
+
+
+
 
 
 
