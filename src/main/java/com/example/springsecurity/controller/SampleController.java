@@ -2,14 +2,18 @@ package com.example.springsecurity.controller;
 
 import com.example.springsecurity.account.AccountContext;
 import com.example.springsecurity.account.AccountRepository;
+import com.example.springsecurity.common.SecurityLogger;
 import com.example.springsecurity.service.SampleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.Principal;
+import java.util.concurrent.Callable;
 
 @Controller
 @RequiredArgsConstructor
@@ -55,6 +59,21 @@ public class SampleController {
     public String user(Model model, Principal principal){
         model.addAttribute("message","Hello User" + principal.getName());
         return "user";
+    }
+
+    @GetMapping("/async-handler")
+    @ResponseBody
+    public Callable<String> asyncHandler(){
+        SecurityLogger.log("asyncHandler Test");
+
+        // 별도의 쓰레드
+        return new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                SecurityLogger.log("callable Test");
+                return "Async Handler";
+            }
+        };
     }
 
 }

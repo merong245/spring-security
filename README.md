@@ -124,6 +124,16 @@ WebSecurity가 먼저 동작하기 때문이다.
 또 인증을 무시하는 antMatchers가 5.7부터 없어졌기 때문에 HttpSecurity에 설정하는 것와 WebSecurity는 동작의 결과는 갖지만 내부 로직이 조금 다르다!  
 따라서 동적으로 처리하는 경우는 가능한(거의 무조건) SecurityFilter를 타도록 HttpSecurity에서 처리하는 것이 좋다.  
 
+# WebAsyncManagerIntegrationFilter
+Async 웹 MVC를 지원하는 필터  
+SecurityFilter의 최상위에서 동작하는 필터  
+SecurityContext가 ThreadLocal에서만 동작한다. Async MVC를 사용하면 다른 쓰레드를 사용하게 되는데 동일한 쓰레드에서 사용할 수 있도록 지원하는 필터  
+Async를 위해 Callable 객체를 생성해서 실행하면 서로 다른 쓰레드에서 실행되지만, SecurityContext에서 관리되는 Principal은 같은 객체임을 확인할 수 있다.
+
+### 동작과정
+1. PreProcess: SecurityContext 설정
+2. Callable: 다른 쓰레드지만 동일한 SecurityContext참고
+3. PostProcess; SecurityContext 정리
 
 
 
