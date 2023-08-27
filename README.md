@@ -115,7 +115,15 @@ Filter Chain에서 발생하는 AuthenticationException과 AccessDeniedException
 - 스프링 시큐리티 5.7버전 이상부터는 configure를 커스텀하는 것이 아닌 WebSecurity 커스텀을 위해 WebSecurityCustomizer를 통해 등록한다.
   - 참고 : https://sprin7io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
 - 하지만 webSecurity에 ignore를 적용하고 싶다면 httpSecurity에 permitAll을 사용하는 것을 공식홈페이지에서 권장한다.
-- 이러한 방법을 사용하면 정적자원 요청시 수행되는 필터들이 없어지게 되고 성능상 장점을 가질 수 있다.
+- 이러한 방법을 사용하면 정적자원 요청시 수행되는 필터들이 없어지게 되고 성능상 장점을 가질 수 있다.(HttpSecurity수정은 아님!)
+  
+### 정적 주소를 왜 HttpSecurity가 아닌 WebSecurity를 설정해야하는가?
+WebSecurity가 먼저 동작하기 때문이다.  
+보안을 위해서 HttpSecurity는 SecurityFilterChain이 적용되고 CSRF, XSS 보안등이 적용된다.    
+하지만 favicon같은 경우는 해당 보안이 필요없는 경우가 있기 때문에 Http 이전에 WebSecurity에서 허용하면 Filter가 적용이 안되어 성능상의 이점이 있다.  
+또 인증을 무시하는 antMatchers가 5.7부터 없어졌기 때문에 HttpSecurity에 설정하는 것와 WebSecurity는 동작의 결과는 갖지만 내부 로직이 조금 다르다!  
+따라서 동적으로 처리하는 경우는 가능한(거의 무조건) SecurityFilter를 타도록 HttpSecurity에서 처리하는 것이 좋다.  
+
 
 
 
