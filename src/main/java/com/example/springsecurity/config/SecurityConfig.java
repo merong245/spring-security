@@ -46,7 +46,7 @@ public class SecurityConfig {
     // 참고 : https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).anyRequest();
+        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Bean
