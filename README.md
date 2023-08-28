@@ -135,6 +135,17 @@ Async를 위해 Callable 객체를 생성해서 실행하면 서로 다른 쓰�
 2. Callable: 다른 쓰레드지만 동일한 SecurityContext참고
 3. PostProcess; SecurityContext 정리
 
+# SpringSecurity와 @Async
+Controller가 아니라 Service가 Async한 경우는 어떨까?  
+- @Async 어노테이션을 붙인다고 Async동작이 구현되지 않는다.
+- Application에 @EnableAsync를 어노테이션을 적용시켜야한다.
+- Service를 Async하게 사용하는 경우(@Async를 사용한 경우) 자동으로 SecurityContext가 공유되지 않는다.
+- HttpSecurity에서 SecurityContextHolder에 strategy를 설정시켜서 변경할 수 있다.
+```java
+SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+``` 
+위와 같은 코드를 통해 localThread의 하위 Thread들에 SecurityContext가 공유시킬 수 있다.  
+
 
 
 

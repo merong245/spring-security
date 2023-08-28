@@ -75,5 +75,13 @@ public class SampleController {
             }
         };
     }
+    @GetMapping("/async-service")
+    @ResponseBody
+    public String asyncService(){
+        SecurityLogger.log("before AsyncService");
+        sampleService.asyncService();
+        SecurityLogger.log("after asyncService");
+        return "AsyncService";
+    }
 
 }
