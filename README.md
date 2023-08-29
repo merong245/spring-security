@@ -146,6 +146,12 @@ SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHRE
 ``` 
 위와 같은 코드를 통해 localThread의 하위 Thread들에 SecurityContext가 공유시킬 수 있다.  
 
+# SecurityContextPersistenceFilter
+SecurityContextRepository를 통해 기존 SecurityContext를 읽어오거나 초기화한다.  
+SecurityFilter에 2번째에 위치하는 이유는 이미 Pricipal의 정보가 담긴 SecurityContext를 불러왔다면 재요청이 필요없이 동작하면되기 때문에 인증을 생략하려고!   
+- 기본 전략은 HTTP Session 활용
+- Spring-Session과 연동하여 세션 클러스터를 구현
+
 
 
 
