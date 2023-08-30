@@ -161,6 +161,21 @@ Response Header에 시큐리티 관련 헤더를 추가해주는 필터
 - HstsHeaderWriter : HTTPS로만 소통하도록 강제
 - XframeOptionsHeaderWriter : clickJacking 방어
 
+# CsrfFilter 
+CSRF 어택 방지 필터
+- 의도한 사용자만 리소스를 변경할 수 있도록 허용하는 필터
+- 4번째로 동작하는 필터
+- 필요한 경우 HttpSecurity에서 disable로 변경가능 -> 권장하지않음
+
+### CSRF 어택
+- 인증된 유저의 계정을 사용해 악의적인 변경 요청을 만들어 보내는 공격  
+- 따라서 CSRF 토큰을 통한 검증으로 보안처리를 한다.
+- 서버에서 CSRF 토큰을 생성해서 보내주고, 이후 클라이언트 요청의 CSRF 토큰이 일치하지 않으면 요청처리를 하지 않음
+
+### CORS
+- 의도하지않은 도메인에서 보내는 요청  
+- 브라우저의 same-origin 정책을 따르기 때문  
+
 
 
 

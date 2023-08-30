@@ -61,6 +61,7 @@ public class SecurityConfig {
         ;
         http.formLogin();
         http.httpBasic();
+        http.csrf().disable();
 
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
         return http.build();
