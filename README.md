@@ -151,8 +151,15 @@ SecurityContextRepository를 통해 기존 SecurityContext를 읽어오거나 �
 SecurityFilter에 2번째에 위치하는 이유는 이미 Pricipal의 정보가 담긴 SecurityContext를 불러왔다면 재요청이 필요없이 동작하면되기 때문에 인증을 생략하려고!   
 - 기본 전략은 HTTP Session 활용
 - Spring-Session과 연동하여 세션 클러스터를 구현
-
-
+  
+# HeaderWriterFilter
+Response Header에 시큐리티 관련 헤더를 추가해주는 필터  
+실제로 우리가 설정을 건드릴 필요는 없는 필터 -> 사랑해요 스프링 시큐리티
+- XContentTypeOptionsHeaderWriter : 마임 타입 스니핑 방어
+- XXssProtectionHeaderWriter : 브라우저에 내장된 XSS 필터 적용
+- CacheControlHeadersWriter : 캐시 히스토리 취약점 방어
+- HstsHeaderWriter : HTTPS로만 소통하도록 강제
+- XframeOptionsHeaderWriter : clickJacking 방어
 
 
 
