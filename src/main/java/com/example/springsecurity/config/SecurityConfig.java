@@ -62,6 +62,10 @@ public class SecurityConfig {
         http.formLogin();
         http.httpBasic();
 //        http.csrf().disable();
+        http.logout()
+                .logoutUrl("/logout") // logout 요청할 URL
+                .logoutSuccessUrl("/") // logout 처리 후 이동할 URL
+        ;
 
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
         return http.build();
