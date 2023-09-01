@@ -177,6 +177,14 @@ CSRF 어택 방지 필터
 - 의도하지않은 도메인에서 보내는 요청  
 - 브라우저의 same-origin 정책을 따르기 때문  
 
+# LogoutFilter
+- 로그아웃을 처리할 때, 동작하는 필터
+- LogoutHandler와 LogoutSuccessHandler로 구성되어 있음 
+  - LogoutHandler는 Composit 구성으로 실제로는 여러 Handler(Csrf, SecurityContext)로 구성되어있다.
+  - LogoutSuccessHandler는 로그아웃의 후처리를 진행하는 역할(ex. 로그인 페이지로 이동)
+- logout의 Get요청, 즉 페이지 요청은 해당 필터가 아닌 DefaultLogoutPageGeneratingFilter에서 동작하는 것이다.
+- HttpSecurity에서 logout메서드를 통해 커스텀 가능
+
 
 
 
