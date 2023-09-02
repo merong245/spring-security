@@ -185,8 +185,14 @@ CSRF 어택 방지 필터
 - logout의 Get요청, 즉 페이지 요청은 해당 필터가 아닌 DefaultLogoutPageGeneratingFilter에서 동작하는 것이다.
 - HttpSecurity에서 logout메서드를 통해 커스텀 가능
 
-
-
+# UsernamePasswordAuthenticationFilter
+- 폼 로그인을 처리하는 인증 필터 
+### 동작과정
+1. 입력 받은 username과 password로 토큰을 만든다.
+2. 해당 토큰으로 AuthenticationManager를 사용하여 인증 시도.
+3. AuthenticationManager가 여러 AuthenticationProvider를 사용하여 인증 시도
+4. 그중 DaoAuthenticationProvider는 UserDetailService를 사용하여 UserDetails정보를 가져와 사용자가 입력한 password와 비교
+5. 정상 처리가 된다면 SecurityContextHolder에 추가하여 로그인 관리한다.
 
 
 
