@@ -194,5 +194,9 @@ CSRF 어택 방지 필터
 4. 그중 DaoAuthenticationProvider는 UserDetailService를 사용하여 UserDetails정보를 가져와 사용자가 입력한 password와 비교
 5. 정상 처리가 된다면 SecurityContextHolder에 추가하여 로그인 관리한다.
 
-
-
+# DefaultLogin/LogoutPageGeneratingFilter
+GET으로 login 또는 logout 요청이 들어오면 페이지를 만들어주는 필터
+- username, password의 parameter 이름 변경 가능
+- custom한 페이지에서 로그인/로그아웃을 할 수 있도록 변경 가능
+  - 이 경우는 해당 filter가 동작하지 않는다.
+- custom한 페이지로 이동하도록 경로 설정 가능
