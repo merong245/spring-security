@@ -59,7 +59,9 @@ public class SecurityConfig {
                 .mvcMatchers("/user").hasRole("USER")
                 .anyRequest().authenticated()
         ;
-        http.formLogin();
+        http.formLogin()
+                .loginPage("/login").permitAll()
+        ;
         http.httpBasic();
 //        http.csrf().disable();
         http.logout()
