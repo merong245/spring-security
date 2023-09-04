@@ -200,3 +200,10 @@ GET으로 login 또는 logout 요청이 들어오면 페이지를 만들어주�
 - custom한 페이지에서 로그인/로그아웃을 할 수 있도록 변경 가능
   - 이 경우는 해당 filter가 동작하지 않는다.
 - custom한 페이지로 이동하도록 경로 설정 가능
+
+### 커스텀 적용하기
+1. HttpSecurity에 formLogin().loginPage()로 로그인 페이지등록 및 permitAll 설정
+  - 페이지 생성 필터가 제거됨
+  - permitAll을 해주지 않으면 너무 맣은 리다이렉션 수행 오류 발생
+2. 커스텀한 login, logout 페이지 만들어주기
+3. login만 커스텀하고 싶더라도 login,logout 페이지 생성 필터 두개 모두 제거되기 때문에 모두 만들어 주어야한다.
