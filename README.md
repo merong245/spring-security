@@ -207,3 +207,16 @@ GET으로 login 또는 logout 요청이 들어오면 페이지를 만들어주�
   - permitAll을 해주지 않으면 너무 맣은 리다이렉션 수행 오류 발생
 2. 커스텀한 login, logout 페이지 만들어주기
 3. login만 커스텀하고 싶더라도 login,logout 페이지 생성 필터 두개 모두 제거되기 때문에 모두 만들어 주어야한다.
+
+  
+# BasicAuthenticationFilter
+Basic 인증을 처리하는 필터
+
+### Basic 인증?
+- 요청헤더에 username과 password를 실어 보내면 브라우저 또는 서버가 그 값을 읽어서 인증하는 방식
+  - Authorization : Basic ~~~~~~ (username:password를 BASE64 Encoding한 결과)
+- 브라우저 기반 요청이 클라이언트의 요청을 처리할 때 자주 사용
+- 보안에 취약하기 때문에 HTTPS 사용 권장
+- curl -u username:password URL 의 방식으로 BASE 헤더를 넣어 확인할 수 있다.
+- stateless하기 때문에 계속 헤더를 넣어주어야한다.
+  - remeberme를 통해 헤더를 지속적으로 넣어 stateful하게 만들 수 있다.
