@@ -229,4 +229,11 @@ Basic 인증을 처리하는 필터
 
 ### 캐시된 요청?
 wrappedSavedRequest에 캐시되어 저장되어있다.
-캐시된 요청이란 인증되지 않은 사용자가 특정 경로에 접근할 때(ex. /dashboard), 해당 경로를 캐시하고, 로그인을 먼저하도록 /login 경로로 보내주고, 로그인이 완료되면 캐시한 경로로 다시 이동시키기위해 사용한다. 
+캐시된 요청이란 인증되지 않은 사용자가 특정 경로에 접근할 때(ex. /dashboard), 해당 경로를 캐시하고, 로그인을 먼저하도록 /login 경로로 보내주고, 로그인이 완료되면 캐시한 경로로 다시 이동시키기위해 사용한다.  
+  
+# SecurityContextHolderAwareRequestFilter
+시큐리티 관련 서블릿 API를 구현해주는 필터(직접 사용할 일은 거의 없음)
+- HttpServeletRequest#authenticate
+- HttpServeletRequest#login
+- HttpServeletRequest#logout
+- AsyncContext#start
