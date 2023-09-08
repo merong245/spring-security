@@ -237,3 +237,10 @@ wrappedSavedRequest에 캐시되어 저장되어있다.
 - HttpServeletRequest#login
 - HttpServeletRequest#logout
 - AsyncContext#start
+
+# AnonymousAuthenticationFilter
+아무 인증을 하지않은 요청이 주어질 때, SecurityContext에서 Authentication이 null이라면 익명 Authentication을 만들어 넣어주고,  null이 아니면 아무일도 하지 않는다.
+- HttpSecurity객체에서 anonymous().principal().authorities().key()를 통해 기본으로 사용할 익명 Authentication객체를 설정해줄 수 있다.
+
+### Null Object Pattern
+null을 사용하는 것이 아니라 null을 대신하는 객체를 생성하여 로직을 처리하는 패턴
