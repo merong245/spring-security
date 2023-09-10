@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
@@ -68,6 +69,19 @@ public class SecurityConfig {
                 .logoutUrl("/logout") // logout 요청할 URL
                 .logoutSuccessUrl("/") // logout 처리 후 이동할 URL
         ;
+
+        // 세션 관리하는 법 설정
+        http.sessionManagement()
+                .sessionFixation()
+                .changeSessionId()
+                .maximumSessions(1)// 동시성을 제어하기 위해 최대 1개의 세션을 사용하도록 설정
+                .maxSessionsPreventsLogin(true) // 추가 로그인 방지
+        ;
+
+        // 세성 생성 정책 설정
+        // RESTful 한 개발을 위해서 채택해야하는 전략이지만 웹기반으로는 적절하지 않음
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
         return http.build();
