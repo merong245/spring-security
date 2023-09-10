@@ -244,3 +244,22 @@ wrappedSavedRequest에 캐시되어 저장되어있다.
 
 ### Null Object Pattern
 null을 사용하는 것이 아니라 null을 대신하는 객체를 생성하여 로직을 처리하는 패턴
+  
+# SessionManagementFilter
+1. 세션 변조 방지 전략 설정 : sessionFixation
+   - none : 신경쓰지 않음
+   - newSession : 매번 새로운 세션을 만든다 -> 기존 세션의 Attribute를 사용하지 않는다는 뜻
+   - migrateSession : 세션을 이주시킴 (서블릿 3.0 컨테이너 default)
+   - changeSessionId : 세션ID를 변경함 (서블릿 3.1 컨테이너 default)
+2. 유효하지 않은 세션의 리다이렉트 시킬 URL 설정
+   - invalidSessionUrl
+   - 로그아웃이 발생했을 때
+3. 동시성 제어 : maximumSessions
+   - 추가 로그인을 막을지 여부 설정 (default - false)
+4. 세션 생성 전략 : sessionCreationPolicy
+   - IF_REQUIRED
+   - NEVER
+   - STATELESS
+   - ALWAYS
+   - 세션을 사용하는 이유 
+     - RequestCacheAwareFilter의 캐시를 세션에다가 저장하여 사용하기 때문에 세션이 없어지면 캐시가 비워지기 때문에 의도대로 동작하지 않을 수 있다.
