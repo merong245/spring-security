@@ -263,3 +263,9 @@ null을 사용하는 것이 아니라 null을 대신하는 객체를 생성하�
    - ALWAYS
    - 세션을 사용하는 이유 
      - RequestCacheAwareFilter의 캐시를 세션에다가 저장하여 사용하기 때문에 세션이 없어지면 캐시가 비워지기 때문에 의도대로 동작하지 않을 수 있다.
+
+# ExceptionTranslationFilter
+- FiltersecurityInterceptor보다 먼저 동작해야한다.
+- 3회 이상 로그인 실패 시 접근을 막는 로직을 구현할 때 커스텀을 통해 적용할 수 있다.
+- HttpSecurity에 exceptionHandling에서 accessDeniedPage(URL)를 통해 에러시 다른 페이지로 이동시킬 수 있다.
+- 악의적인 접근을 확인하기 위해서는 accessDeniedHandler(Handler)를 생성하여 로그를 남기고 일정 횟수 반복시 로그인을 차단할 수 있다.(구현해야함)
