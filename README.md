@@ -269,3 +269,16 @@ null을 사용하는 것이 아니라 null을 대신하는 객체를 생성하�
 - 3회 이상 로그인 실패 시 접근을 막는 로직을 구현할 때 커스텀을 통해 적용할 수 있다.
 - HttpSecurity에 exceptionHandling에서 accessDeniedPage(URL)를 통해 에러시 다른 페이지로 이동시킬 수 있다.
 - 악의적인 접근을 확인하기 위해서는 accessDeniedHandler(Handler)를 생성하여 로그를 남기고 일정 횟수 반복시 로그인을 차단할 수 있다.(구현해야함)
+
+# FilterSecurityInterceptor
+Http 리소스 시큐리티 처리를 담당하는 필터
+- AccessDecisionManager를 사용하여 인가를 처리한다.
+```java
+    http
+        .authorizeHttpRequests()
+        .mvcMatchers("/", "/info", "/account/**", "/sign-up").permitAll()
+        .mvcMatchers("/admin").hasRole("ADMIN")
+        .mvcMatchers("/user").hasAuthority("ROLE_USER")
+        .anyRequest().authenticated()
+    ;
+```
