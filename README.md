@@ -282,3 +282,14 @@ Http 리소스 시큐리티 처리를 담당하는 필터 -> 주로 마지막으
         .anyRequest().authenticated()
     ;
 ```
+
+# RememberMeAuthenticationFilter
+명시적으로 로그아웃을 하기 전까지 로그인 유지하기 기능을 담당하는 필터
+- rememberMe 메서드를 통해 userDetail을 관리하는 Service Class를 등록한다.
+- 토큰을 암호화/복호화할 키를 설정해준다.
+
+### 동작과정
+1. 로그인 정보로 RememberMeAuthenticationToken으로 인증 정보를 저장한다. -> 기존은 UsernameAuthenticationToken 정보로 저장된다.
+2. rememberMeAuth가 null이 아니라면(로그인이 성공했다면) 인증 정보를 SecurityContextHolder에 저장한다.
+3. 다음 request요청시 RememberMeAuthenticationFilter가 동작하면서 해당 정보가 존재하는지 확인한다. -> 명시적으로 로그아웃되었는지 확인하는 과정이다.
+4. 존재한다면 해당 정보로 다시 쿠키에 세션정보를 넣어준다. -> 즉, 기존정보로 로그인을 하여 로그인이 유지된다.
