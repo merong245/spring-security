@@ -293,3 +293,14 @@ Http 리소스 시큐리티 처리를 담당하는 필터 -> 주로 마지막으
 2. rememberMeAuth가 null이 아니라면(로그인이 성공했다면) 인증 정보를 SecurityContextHolder에 저장한다.
 3. 다음 request요청시 RememberMeAuthenticationFilter가 동작하면서 해당 정보가 존재하는지 확인한다. -> 명시적으로 로그아웃되었는지 확인하는 과정이다.
 4. 존재한다면 해당 정보로 다시 쿠키에 세션정보를 넣어준다. -> 즉, 기존정보로 로그인을 하여 로그인이 유지된다.
+
+# 커스텀 필터 추가하기
+1. 필터 생성
+  - 필터는 일반적인 서블릿 필터와 동일하기 때문에 서블릿 필터로 구현할 수 있다.
+  - GenericFilterBean을 상속받아서 구현하는 것이 스프링 친화적이고 구현하기 쉽다
+2. 현재 필터 다음오는 필터를 처리해주어야한다.
+  - chain.doFilter를 동작시켜야 다음 필터로 넘어간다.
+3. HttpSecurity에 addFilter로 필터를 추가시킨다.
+  - addFilterBefore
+  - addFilterAfter
+  - ... 등이 있다!
