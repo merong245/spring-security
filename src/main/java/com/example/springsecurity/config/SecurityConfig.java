@@ -1,6 +1,7 @@
 package com.example.springsecurity.config;
 
 import com.example.springsecurity.account.AccountService;
+import com.example.springsecurity.common.LoggingFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +59,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.addFilterBefore(new LoggingFilter(), WebAsyncManagerIntegrationFilter.class); // WebAsyncManagerIntegrationFilter 전에 LogFilter 등록
         http
                 .authorizeHttpRequests()
                 .mvcMatchers("/", "/info", "/account/**", "/sign-up").permitAll()
@@ -72,6 +75,7 @@ public class SecurityConfig {
                 .userDetailsService(accountService)
                 .key("remember-me-test")
         ;
+
 
         http.httpBasic();
 //        http.csrf().disable();
