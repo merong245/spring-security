@@ -304,3 +304,21 @@ Http 리소스 시큐리티 처리를 담당하는 필터 -> 주로 마지막으
   - addFilterBefore
   - addFilterAfter
   - ... 등이 있다!
+
+# 메서드 시큐리티
+메서드 단위에서 시큐리티를 동작하는 것  
+
+### @Secured and @RollAllowed
+스프링의 AOP 기술을 통해 빈에다가 @Secured("ROLE_USER") 등의 어노테이션을 붙이면 스프링 시큐리티가 처리를 해준다.  
+일반적인 동작이라면 메소드가 실행되어 SecurityContext를 타고 들어가 NPE가 발생하게 된다.  
+하지만 메서드 시큐리티를 이용하면 AOP를 통해 인가 단계에서 Excpetion에 발생하게된다.  
+@RoleAllowed도 거의 동일한 동작을 수행
+- 메소드 호출 이전에 권한 확인 불가
+- 스프링 EL 사용 불가
+### @PreAuthorized and @PostAuthorized
+- 메서드 호출 이전 이후에 권한을 확인할 수 있다.
+  - PreAuthorized는 호출 이전에, PostAuthorized는 호출 이후
+- 스프링 EL사용하여 메소드 파라미터와 리턴값 검증 가능
+### @PreFilter, @PostFilter 등등..
+더 많은 건 ~~ 공식홈페이지나 벨덩 블로그를 참고하자.    
+ps. 기본적으로 이전에 설정한 계층형 인가를 이해하지 못하게 때문에 필요한다면 MethodSecurity를 커스텀해야한다.
