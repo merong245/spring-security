@@ -322,3 +322,9 @@ Http 리소스 시큐리티 처리를 담당하는 필터 -> 주로 마지막으
 ### @PreFilter, @PostFilter 등등..
 더 많은 건 ~~ 공식홈페이지나 벨덩 블로그를 참고하자.    
 ps. 기본적으로 이전에 설정한 계층형 인가를 이해하지 못하게 때문에 필요한다면 MethodSecurity를 커스텀해야한다.
+
+# @AuthenticationPrincipal
+Principal은 자바 표준, SercurityContextHolder에서 얻은 Principal은 UserDetails이고 스프링 시큐리티가 제공한다.  
+우리가 만든 유저, Account객체를 스프링 시큐리티가 관리하게 하고 싶다면 커스텀하는 방법이 있다.  
+스프링 시큐리티의 User 속성을 상속받아서 Getter를 구현하면 스프링이 관리하도록 커스텀할 수 있다.
+
