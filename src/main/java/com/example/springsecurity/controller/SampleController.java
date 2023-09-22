@@ -1,8 +1,10 @@
 package com.example.springsecurity.controller;
 
+import com.example.springsecurity.account.Account;
 import com.example.springsecurity.account.AccountContext;
 import com.example.springsecurity.account.AccountRepository;
 import com.example.springsecurity.account.UserAccount;
+import com.example.springsecurity.common.CurrentUser;
 import com.example.springsecurity.common.SecurityLogger;
 import com.example.springsecurity.service.SampleService;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +30,13 @@ public class SampleController {
     // handlerAdaptor가 해당 컨트롤러에 동작을 위임함
     // mapping url
     @GetMapping("/")
-    public String index(Model model, @AuthenticationPrincipal UserAccount userAccount){
-        if(userAccount == null) {
+    public String index(Model model, @CurrentUser Account account){
+        if(account == null) {
             // model에 message라는 속성에 Hello Spring Security라는 값을 담아줌
             model.addAttribute("message", "Hello Spring Security");
         }
         else{
-            model.addAttribute("message","Hello " + userAccount.getUsername());
+            model.addAttribute("message","Hello " + account.getUsername());
         }
         return "index"; // view Resolver가 해석
     }
