@@ -328,3 +328,7 @@ Principal은 자바 표준, SercurityContextHolder에서 얻은 Principal은 Use
 우리가 만든 유저, Account객체를 스프링 시큐리티가 관리하게 하고 싶다면 커스텀하는 방법이 있다.  
 스프링 시큐리티의 User 속성을 상속받아서 Getter를 구현하면 스프링이 관리하도록 커스텀할 수 있다.
 
+# Spring Security With Spring Data
+Spring security에서 제공하는 Spring Data 편리하게 사용할 수 있는 의존성이 있다.  
+Spring Expression을 통해 ``` @Query("select b from Book b where b.author.id = ?#{principal.account.id}") ``` 와 같이 Principal 객체(UserDetails로 리턴된 즉 UserAccount)를 사용할 수 있도록 해준다.  
+이와 같은 방법으로 두 의존성을 받아 쉽게 Security의 User를 관리하고 DB와 연동할 수 있다.
