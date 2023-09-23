@@ -5,7 +5,10 @@
     <title>user</title>
 </head>
 <body>
-    <!--message 속성으로 전달 받은 값 출력-->
-    <h1 th:text="${message}">User</h1>
+<!--message 속성으로 전달 받은 값 출력-->
+<h1 th:text="${message}">User</h1>
+<tr th:each="book : ${books}">
+    <td><span th:text="${book.title}">Title</span></td>
+</tr>
 </body>
 </html>
